@@ -45,10 +45,10 @@ post '/charge' do
   begin
     charge = Stripe::Charge.create(
       :amount => payload[:amount], # this number should be in cents
-      :currency => "usd",
+      :currency => "eur",
       :customer => customer,
       :source => source,
-      :description => "Example Charge",
+      :description => "New Charge",
       :shipping => payload[:shipping],
     )
   rescue Stripe::StripeError => e
@@ -72,7 +72,7 @@ def authenticate!
     end
   else
     begin
-      @customer = Stripe::Customer.create(:description => "mobile SDK example customer")
+      @customer = Stripe::Customer.create(:description => "New Payment")
     rescue Stripe::InvalidRequestError
     end
     session[:customer_id] = @customer.id
@@ -86,9 +86,9 @@ post '/create_charge' do
   begin
     charge = Stripe::Charge.create(
       :amount => params[:amount], # this number should be in cents
-      :currency => "usd",
+      :currency => "eur",
       :source => params[:source],
-      :description => "Example Charge"
+      :description => "New Charge"
     )
   rescue Stripe::StripeError => e
     status 402
